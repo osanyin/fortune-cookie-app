@@ -41,7 +41,10 @@ fortuneCookie.config(function($httpProvider) {
   })
 })
 
-fortuneCookie.controller('HomeController', ['$scope', '$rootScope', 'phraseService', '$ionicLoading', '$ionicPopup', function($scope, $rootScope, phraseService, $ionicLoading, $ionicPopup) {
+fortuneCookie.controller('HomeController', ['$scope', 
+                                            '$rootScope', 
+                                            'phraseService', 
+                                            '$ionicPopup', function($scope, $rootScope, phraseService, $ionicPopup) {
 
   $scope.setRandomPhrase = function() {
     if ($scope.phrase) {
