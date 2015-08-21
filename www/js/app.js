@@ -20,17 +20,23 @@ fortuneCookie.run(function($ionicPlatform) {
 
 fortuneCookie.controller('HomeController', ['$scope', 'phraseService', function($scope, phraseService) {
   $scope.setRandomPhrase = function() {
-    phraseService.getRandom().then(function(response) {
+    if ($scope.phrase) {
+      var current = $scope.phrase.id
+    }
+
+    phraseService.getRandom(current).then(function(response) {
       $scope.phrase = response.data;
     });
   }
 }]);
 
 fortuneCookie.service('phraseService', ['$http', function($http) {
-  var apiUrl = 'http://localhost:3000/phrases.json';
+  var apiUrl = 'http://agile-island-8354.herokuapp.com';
+
   var phraseService = {
-    getRandom: function() {
-      return $http.get(apiUrl);
+    getRandom: function(current) {
+      var resourceUrl = apiUrl + (current ? '/phrases.json?current=' + current : '/phrases.json');
+      return $http.get(resourceUrl);
     }
   } 
 
