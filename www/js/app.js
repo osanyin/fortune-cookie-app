@@ -16,4 +16,23 @@ fortuneCookie.run(function($ionicPlatform) {
       StatusBar.styleDefault();
     }
   });
-})
+});
+
+fortuneCookie.controller('HomeController', ['$scope', 'phraseService', function($scope, phraseService) {
+  $scope.setRandomPhrase = function() {
+    phraseService.getRandom().then(function(response) {
+      $scope.phrase = response.data;
+    });
+  }
+}]);
+
+fortuneCookie.service('phraseService', ['$http', function($http) {
+  var apiUrl = 'http://localhost:3000/phrases.json';
+  var phraseService = {
+    getRandom: function() {
+      return $http.get(apiUrl);
+    }
+  } 
+
+  return phraseService;
+}]);
