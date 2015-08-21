@@ -5,7 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 var fortuneCookie = angular.module('fortuneCookie', ['ionic']);
 
-fortuneCookie.run(function($ionicPlatform) {
+fortuneCookie.run(function($ionicPlatform, $rootScope, $ionicLoading) {
+  $rootScope.$on('loading:show', function() {
+    $ionicLoading.show({template: 'Carregando...'})
+  })
+
+  $rootScope.$on('loading:hide', function() {
+    $ionicLoading.hide()
+  })
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,7 +26,23 @@ fortuneCookie.run(function($ionicPlatform) {
   });
 });
 
-fortuneCookie.controller('HomeController', ['$scope', 'phraseService', function($scope, phraseService) {
+fortuneCookie.config(function($httpProvider) {
+  $httpProvider.interceptors.push(function($rootScope) {
+    return {
+      request: function(config) {
+        $rootScope.$broadcast('loading:show')
+        return config
+      },
+      response: function(response) {
+        $rootScope.$broadcast('loading:hide')
+        return response
+      }
+    }
+  })
+})
+
+fortuneCookie.controller('HomeController', ['$scope', '$rootScope', 'phraseService', '$ionicLoading', '$ionicPopup', function($scope, $rootScope, phraseService, $ionicLoading, $ionicPopup) {
+
   $scope.setRandomPhrase = function() {
     if ($scope.phrase) {
       var current = $scope.phrase.id
@@ -26,6 +50,12 @@ fortuneCookie.controller('HomeController', ['$scope', 'phraseService', function(
 
     phraseService.getRandom(current).then(function(response) {
       $scope.phrase = response.data;
+    }, function() {
+      $rootScope.$broadcast('loading:hide');
+      $ionicPopup.alert({
+        title: 'Ops!',
+        template: 'Não foi possível se conectar ao servidor.'
+      });
     });
   }
 }]);
