@@ -9,6 +9,6 @@ Para instalar o aplicativo em seu celular, siga o passo a passo:
 * Execute o seguinte comando para adicionar a plataforma ao projeto: ionic platform add nomedaplataforma
 * Execute o aplicativo no seu celular: ionic run nomedaplataforma
 
-Caso queria uma prévia do aplicativo, basta entrar neste link com o seu celular: https://github.com/osanyin/fortune-cookie-app
+Caso queria uma prévia do aplicativo, basta entrar neste link com o seu celular: http://frozen-chamber-7422.herokuapp.com
 
 Pronto! E ai, como está sua sorte? :)
