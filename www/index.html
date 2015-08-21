@@ -28,7 +28,11 @@
         <h1 class="title">Biscoito da Sorte</h1>
       </ion-header-bar>
       <ion-content ng-controller="HomeController" ng-init="setRandomPhrase()" >
-        {{ phrase.body }}
+        <h4>{{ phrase.body }}</h4>
+        
+        <button class="button button-stable" ng-click="setRandomPhrase()" >
+          Abrir outro biscoito
+        </button>
       </ion-content>
     </ion-pane>
   </body>
